@@ -12,52 +12,31 @@ header{padding:14px 20px 10px;border-bottom:1px solid rgba(255,255,255,.08);back
 h1{margin:0;font-size:clamp(16px,2.6vw,26px);letter-spacing:-.03em;}
 .subtitle{margin:3px 0 0;color:var(--muted);font-size:12px;}
 main{max-width:1500px;margin:0 auto;padding:14px 20px 28px;}
-
-/* ── Tree container: flex column, fixed height, owns the border/radius/shadow ── */
-.tree-container{
-  display:flex;flex-direction:column;height:80vh;
-  border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);
-  box-shadow:var(--shadow);overflow:hidden;
-}
-
-/* ── Legend: flex-shrink:0 so it NEVER overlaps the canvas below it ── */
-.legend{
-  flex-shrink:0;display:flex;flex-direction:column;gap:0;
-  padding:6px 12px;
-  background:rgba(14,18,26,.98);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(255,255,255,.07);
-}
-.legend-row{display:flex;gap:5px;align-items:center;}
+.tree-container{display:flex;flex-direction:column;height:80vh;border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
+.legend{flex-shrink:0;display:flex;flex-direction:column;gap:0;padding:6px 12px;background:rgba(14,18,26,.98);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.07);}
+.legend-row{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
 .legend-themes{border-top:1px solid rgba(255,255,255,.06);padding-top:5px;margin-top:4px;}
 .legend-sep{width:1px;background:rgba(255,255,255,.14);align-self:stretch;margin:0 1px;}
 .legend-label{color:var(--muted);font-size:9.5px;text-transform:uppercase;letter-spacing:.12em;padding:0 2px;}
 .pill{display:inline-flex;align-items:center;gap:5px;color:var(--muted);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:4px 8px;font-size:10.5px;white-space:nowrap;}
 .dot{width:6px;height:6px;border-radius:999px;flex-shrink:0;}
-.filter-btn,.theme-btn{display:inline-flex;align-items:center;gap:4px;color:var(--muted);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);border-radius:999px;padding:4px 9px;font-size:10.5px;white-space:nowrap;cursor:pointer;transition:background .15s,border .15s,color .15s;user-select:none;}
-.filter-btn:hover,.theme-btn:hover{background:rgba(255,255,255,.10);color:var(--text);}
+.filter-btn,.theme-btn,.legend-btn{display:inline-flex;align-items:center;gap:4px;color:var(--muted);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);border-radius:999px;padding:4px 9px;font-size:10.5px;white-space:nowrap;cursor:pointer;transition:background .15s,border .15s,color .15s;user-select:none;}
+.filter-btn:hover,.theme-btn:hover,.legend-btn:hover{background:rgba(255,255,255,.10);color:var(--text);}
 .filter-btn.active{color:#fff;background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.32);}
 #search{border-radius:999px;padding:4px 11px;font-size:11px;height:28px;width:140px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:var(--text);outline:none;}
 #resetLayoutBtn{padding:4px 11px;font-size:11px;height:28px;border-radius:999px;border:1px solid rgba(255,170,85,.5);background:rgba(255,255,255,.06);color:#ffbb77;cursor:pointer;}
 #resetLayoutBtn:hover{background:rgba(255,170,85,.12);}
-
-/* ── Canvas: flex:1 fills EXACTLY the remaining space, scroll lives here ── */
-.canvas-wrap{
-  flex:1;min-height:0;
-  background:rgba(20,24,32,.72);
-  overflow:auto;position:relative;cursor:grab;
-}
+.canvas-wrap{flex:1;min-height:0;background:rgba(20,24,32,.72);overflow:auto;position:relative;cursor:grab;}
 .canvas-wrap.panning{cursor:grabbing !important;}
-
 .tree{min-width:1200px;padding:20px 26px 60px;position:relative;}
 .generation{display:grid;grid-template-columns:repeat(6,var(--card-w));gap:18px 22px;justify-content:center;margin:0 0 24px;}
 .gen-title{grid-column:1/-1;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.18em;margin:4px 0 -2px;text-align:center;}
-.person{border:1px solid rgba(255,255,255,.10);background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.035));border-radius:16px;padding:11px;cursor:grab;position:relative;box-shadow:0 10px 28px rgba(0,0,0,.16);transition:border .15s,box-shadow .15s,opacity .15s;user-select:none;overflow:hidden;}
+.person{border:1px solid rgba(255,255,255,.10);background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.035));border-radius:16px;padding:11px;cursor:grab;position:relative;box-shadow:0 10px 28px rgba(0,0,0,.16);transition:border .15s,box-shadow .15s,opacity .15s;user-select:none;}
 .person:hover{border-color:rgba(128,255,176,.35);z-index:20 !important;}
-.person.selected{background:linear-gradient(180deg,rgba(128,255,176,.22),rgba(128,255,176,.10));border-color:rgba(128,255,176,.45);box-shadow:0 0 0 1px rgba(128,255,176,.2),0 16px 40px rgba(0,0,0,.28);}
-.person.related{background:linear-gradient(180deg,rgba(138,180,255,.22),rgba(138,180,255,.10));border-color:rgba(138,180,255,.45);}
+.person.selected{background:linear-gradient(180deg,rgba(128,255,176,.22),rgba(128,255,176,.10));}
+.person.related{background:linear-gradient(180deg,rgba(138,180,255,.15),rgba(138,180,255,.07));}
 .person.dim{opacity:.22;}
-.person.dragging{opacity:.94;box-shadow:0 28px 70px rgba(0,0,0,.6) !important;border-color:rgba(255,255,255,.3) !important;z-index:50 !important;cursor:grabbing !important;}
+.person.dragging{opacity:.94;box-shadow:0 28px 70px rgba(0,0,0,.6) !important;z-index:50 !important;cursor:grabbing !important;}
 .card-top{display:flex;align-items:flex-start;gap:7px;margin:0 0 7px;}
 .avatar-init{width:34px;height:34px;border-radius:50%;border:1.5px solid;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10.5px;font-weight:700;letter-spacing:-.01em;}
 .card-info{flex:1;min-width:0;}
@@ -70,19 +49,20 @@ main{max-width:1500px;margin:0 auto;padding:14px 20px 28px;}
 .badge{font-size:9.5px;color:#dce7f5;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.07);border-radius:999px;padding:2px 6px;}
 .spouse-link{grid-column:span 2;display:grid;grid-template-columns:var(--card-w) 42px var(--card-w);align-items:center;}
 .marriage-line{height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-
-/* ── Popup ─────────────────────────────────────────────────── */
+/* ── Shared popup base ──────────────────────────────────── */
 .popup-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(5px);z-index:99;}
-.popup-backdrop.hidden,.char-popup.hidden{display:none;}
+.popup-backdrop.hidden{display:none;}
+.popup-close{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:var(--muted);border-radius:999px;width:32px;height:32px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s,color .15s;}
+.popup-close:hover{background:rgba(255,255,255,.14);color:var(--text);}
+/* ── Character notes popup ──────────────────────────────── */
 .char-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(580px,94vw);max-height:86vh;background:#12161f;border:1px solid rgba(255,255,255,.13);border-radius:22px;box-shadow:0 36px 90px rgba(0,0,0,.75);z-index:100;display:flex;flex-direction:column;overflow:hidden;}
+.char-popup.hidden{display:none;}
 .popup-hdr{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(255,255,255,.04),transparent);}
 .popup-hdr-left{display:flex;align-items:center;gap:13px;}
 .popup-avatar{width:50px;height:50px;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;letter-spacing:-.02em;flex-shrink:0;}
 .popup-name{font-size:20px;font-weight:800;letter-spacing:-.03em;color:#f4f7fb;line-height:1.1;}
 .popup-role{font-size:11.5px;color:var(--muted);margin-top:3px;}
 .popup-gen{display:inline-block;border-radius:999px;padding:2px 8px;font-size:9.5px;font-weight:600;letter-spacing:.05em;margin-top:5px;}
-.popup-close{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:var(--muted);border-radius:999px;width:32px;height:32px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s,color .15s;}
-.popup-close:hover{background:rgba(255,255,255,.14);color:var(--text);}
 .popup-body{overflow-y:auto;padding:18px 20px 24px;display:flex;flex-direction:column;gap:15px;}
 .popup-section h4{font-size:9.5px;text-transform:uppercase;letter-spacing:.2em;margin:0 0 7px;}
 .popup-section p{font-size:13px;line-height:1.65;color:#d8e2f0;margin:0;}
@@ -94,17 +74,38 @@ main{max-width:1500px;margin:0 auto;padding:14px 20px 28px;}
 .popup-rel-label{font-size:9px;text-transform:uppercase;letter-spacing:.15em;display:block;margin-bottom:4px;}
 .popup-nav-btn{margin:2px 3px 2px 0;padding:4px 9px;border-radius:8px;font-size:11px;cursor:pointer;color:var(--text);transition:filter .12s;}
 .popup-nav-btn:hover{filter:brightness(1.3);}
+/* ── Name Twins popup ───────────────────────────────────── */
+.twins-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(980px,96vw);max-height:88vh;background:#12161f;border:1px solid rgba(255,255,255,.13);border-radius:22px;box-shadow:0 36px 90px rgba(0,0,0,.75);z-index:100;display:flex;flex-direction:column;overflow:hidden;}
+.twins-popup.hidden{display:none;}
+.twins-body{overflow-y:auto;padding:20px 22px 28px;display:flex;flex-direction:column;gap:28px;}
+.twin-group-name{font-size:17px;font-weight:800;letter-spacing:-.02em;margin:0 0 3px;}
+.twin-group-note{font-size:11.5px;color:var(--muted);margin:0 0 12px;line-height:1.45;}
+.twin-cards-row{display:flex;gap:12px;flex-wrap:wrap;}
+.twin-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px;width:190px;flex-shrink:0;transition:border .15s;}
+.twin-card:hover{border-color:rgba(128,255,176,.3);}
+.twin-avatar{width:38px;height:38px;border-radius:50%;border:1.5px solid;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+.twin-card-name{font-size:12.5px;font-weight:700;line-height:1.2;}
+.twin-gen-badge{display:inline-block;border-radius:999px;padding:2px 7px;font-size:9px;font-weight:600;letter-spacing:.04em;}
+.twin-role{font-size:10px;color:var(--muted);line-height:1.3;margin-top:1px;}
+.twin-view-btn{margin-top:auto;padding:7px;border-radius:8px;background:rgba(128,255,176,.07);border:1px solid rgba(128,255,176,.18);color:var(--accent);font-size:11px;cursor:pointer;transition:background .12s;text-align:center;}
+.twin-view-btn:hover{background:rgba(128,255,176,.14);}
+/* ── Instructions popup ─────────────────────────────────── */
+.instr-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(640px,94vw);max-height:88vh;background:#12161f;border:1px solid rgba(255,255,255,.13);border-radius:22px;box-shadow:0 36px 90px rgba(0,0,0,.75);z-index:100;display:flex;flex-direction:column;overflow:hidden;}
+.instr-popup.hidden{display:none;}
+.instr-body{overflow-y:auto;padding:18px 22px 26px;display:flex;flex-direction:column;gap:16px;}
+.instr-section h4{font-size:9.5px;text-transform:uppercase;letter-spacing:.2em;color:var(--accent);margin:0 0 6px;}
+.instr-section p{font-size:13px;line-height:1.65;color:#d8e2f0;margin:0;}
+kbd{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 5px;font-size:11px;font-family:inherit;}
 </style>
 </head>
 <body>
 <header>
   <div class="topbar">
     <h1>Buendía Family Genealogy</h1>
-    <p class="subtitle">One Hundred Years of Solitude · Click a card to highlight connections · 📄 opens character notes · Drag to rearrange · Esc to dismiss</p>
+    <p class="subtitle">One Hundred Years of Solitude · Click a card to highlight connections · 📄 opens character notes · Drag to rearrange · <kbd>Esc</kbd> to dismiss</p>
   </div>
 </header>
 <main>
-  <!-- tree-container is a flex column: legend on top, canvas below. They can NEVER overlap. -->
   <div class="tree-container">
     <div class="legend">
       <div class="legend-row">
@@ -123,6 +124,9 @@ main{max-width:1500px;margin:0 auto;padding:14px 20px 28px;}
         <span class="legend-sep"></span>
         <input id="search" placeholder="Search…"/>
         <button id="resetLayoutBtn">Reset positions</button>
+        <span class="legend-sep"></span>
+        <span class="legend-btn" id="twinsBtn">👥 Name Twins</span>
+        <span class="legend-btn" id="instrBtn">? Instructions</span>
       </div>
       <div class="legend-row legend-themes">
         <span class="legend-label">Themes</span>
@@ -134,8 +138,7 @@ main{max-width:1500px;margin:0 auto;padding:14px 20px 28px;}
         <span class="theme-btn" data-theme="vitality">🌿 Vitality</span>
       </div>
     </div>
-    <!-- canvas-wrap: flex:1, fills all space below legend, scroll lives here -->
-    <div class="canvas-wrap">
+    <div class="canvas-wrap" id="canvasWrap">
       <div class="tree" id="tree">
         <div class="generation">
           <div class="gen-title">Founding Generation</div>
@@ -183,19 +186,57 @@ main{max-width:1500px;margin:0 auto;padding:14px 20px 28px;}
   </div>
 </main>
 
-<div class="popup-backdrop hidden" id="popup-backdrop"></div>
+<!-- Character notes popup -->
+<div class="popup-backdrop hidden" id="notes-backdrop"></div>
 <div class="char-popup hidden" id="char-popup">
   <div class="popup-hdr">
     <div class="popup-hdr-left">
       <div class="popup-avatar" id="popup-avatar"></div>
       <div><div class="popup-name" id="popup-name"></div><div class="popup-role" id="popup-role"></div><div id="popup-gen"></div></div>
     </div>
-    <button class="popup-close" id="popup-close">✕</button>
+    <button class="popup-close" id="notes-close">✕</button>
   </div>
   <div class="popup-body" id="popup-body"></div>
 </div>
 
+<!-- Name Twins popup -->
+<div class="popup-backdrop hidden" id="twins-backdrop"></div>
+<div class="twins-popup hidden" id="twins-popup">
+  <div class="popup-hdr">
+    <div class="popup-hdr-left">
+      <div style="font-size:28px;line-height:1;margin-right:4px;">👥</div>
+      <div>
+        <div class="popup-name">Name Disambiguation</div>
+        <div class="popup-role">Characters who share the same name — the central reading challenge of the novel</div>
+      </div>
+    </div>
+    <button class="popup-close" id="twins-close">✕</button>
+  </div>
+  <div class="twins-body" id="twins-body"></div>
+</div>
+
+<!-- Instructions popup -->
+<div class="popup-backdrop hidden" id="instr-backdrop"></div>
+<div class="instr-popup hidden" id="instr-popup">
+  <div class="popup-hdr">
+    <div class="popup-hdr-left">
+      <div style="font-size:26px;line-height:1;margin-right:8px;">📖</div>
+      <div><div class="popup-name">How to use this tool</div><div class="popup-role">A guide for navigating the Buendía genealogy</div></div>
+    </div>
+    <button class="popup-close" id="instr-close">✕</button>
+  </div>
+  <div class="instr-body">
+    <div class="instr-section"><h4>Selecting characters</h4><p>Click any card to select it. Connecting lines appear between the selected character and all their relatives, color-coded by relationship type. Connected cards receive matching colored borders: <span style="color:#ffd27d">gold = spouse</span>, <span style="color:#7eb8ff">blue = parent</span>, <span style="color:#c084fc">purple = child</span>, <span style="color:#ff8ab4">pink = lover</span>. Click the card again or press <kbd>Esc</kbd> to deselect.</p></div>
+    <div class="instr-section"><h4>Character notes (📄)</h4><p>Click the 📄 icon on any card to open a detailed notes panel with three sections: Arc in the novel, Themes &amp; significance, and What to watch for. Within the panel, click any relationship button to jump directly to that character's notes.</p></div>
+    <div class="instr-section"><h4>Name disambiguation (👥)</h4><p>Click <strong>👥 Name Twins</strong> in the toolbar to open the disambiguation panel. It groups all characters sharing a name — José Arcadio (4 characters), Aureliano (5 + a collective), Remedios (2), Amaranta (2) — showing their distinguishing traits side by side. Use <strong>View →</strong> to select any character on the canvas.</p></div>
+    <div class="instr-section"><h4>Connection filters</h4><p>The <strong>Connections</strong> filters (Blood, Romantic, Descent, Unions) show all relationships of a given type across the full tree when nothing is selected, or filter visible connections when a card is selected.</p></div>
+    <div class="instr-section"><h4>Thematic filters</h4><p>The <strong>Themes</strong> row (Solitude, War, Forbidden love, Fate &amp; repetition, Magic, Vitality) dims all characters not associated with that theme, letting you trace a single motif across generations.</p></div>
+    <div class="instr-section"><h4>Navigating &amp; rearranging</h4><p>Drag the empty canvas to pan. Drag any card to reposition it — cards spring back toward home with collision avoidance when released. Click <strong>Reset positions</strong> to restore the original layout. Type in the <strong>Search</strong> box to filter by name, role, or badge.</p></div>
+  </div>
+</div>
+
 <script>
+// ── Constants ────────────────────────────────────────────────
 const COLORS={spouses:'#ffd27d',parents:'#7eb8ff',children:'#c084fc',lovers:'#ff8ab4'};
 const REL_TYPES=['spouses','parents','children','lovers'];
 const FILTER_TYPES={blood:['parents','children'],romantic:['spouses','lovers'],descend:['children'],unions:['spouses']};
@@ -210,166 +251,172 @@ const GEN_COLORS={
   "Final generations connection":"#ffb4d0","Romantic connection":"#ffb4d0",
 };
 const THEMES={
-  solitude:{label:"Solitude",col:"#8ab4ff",ids:new Set(["jose-arcadio-buendia","aureliano-colonel","amaranta","aureliano-babilonia","jose-arcadio-segundo","remedios-beauty","jose-arcadio-later","rebeca","melquiades"])},
-  war:{label:"War",col:"#ff9a7a",ids:new Set(["aureliano-colonel","aurelianos-17","arcadio","aureliano-jose"])},
-  forbidden:{label:"Forbidden love",col:"#ff8ab4",ids:new Set(["amaranta","rebeca","renata","amaranta-ursula","aureliano-babilonia","aureliano-jose","pietro-crespi"])},
-  fate:{label:"Fate & repetition",col:"#c084fc",ids:new Set(["aurelianos-17","aureliano-babilonia","ursula","jose-arcadio-buendia","jose-arcadio-son","aureliano-colonel","melquiades"])},
-  magic:{label:"Magic",col:"#ffd27d",ids:new Set(["remedios-beauty","mauricio","jose-arcadio-buendia","aureliano-babilonia","pilar","melquiades"])},
-  vitality:{label:"Vitality",col:"#80ffb0",ids:new Set(["ursula","pilar","petra","aureliano-segundo","amaranta-ursula"])},
+  solitude:{col:"#8ab4ff",ids:new Set(["jose-arcadio-buendia","aureliano-colonel","amaranta","aureliano-babilonia","jose-arcadio-segundo","remedios-beauty","jose-arcadio-later","rebeca","melquiades"])},
+  war:{col:"#ff9a7a",ids:new Set(["aureliano-colonel","aurelianos-17","arcadio","aureliano-jose"])},
+  forbidden:{col:"#ff8ab4",ids:new Set(["amaranta","rebeca","renata","amaranta-ursula","aureliano-babilonia","aureliano-jose","pietro-crespi"])},
+  fate:{col:"#c084fc",ids:new Set(["aurelianos-17","aureliano-babilonia","ursula","jose-arcadio-buendia","jose-arcadio-son","aureliano-colonel","melquiades"])},
+  magic:{col:"#ffd27d",ids:new Set(["remedios-beauty","mauricio","jose-arcadio-buendia","aureliano-babilonia","pilar","melquiades"])},
+  vitality:{col:"#80ffb0",ids:new Set(["ursula","pilar","petra","aureliano-segundo","amaranta-ursula"])},
 };
+const NAME_TWINS=[
+  {name:"José Arcadio",note:"Four characters bear this name across five generations. Watch the role description and generation to tell them apart.",ids:["jose-arcadio-buendia","jose-arcadio-son","jose-arcadio-segundo","jose-arcadio-later"]},
+  {name:"Aureliano",note:"Five distinct characters plus a collective group — the most repeated name in the novel, which is itself García Márquez's thesis about cyclical fate.",ids:["aureliano-colonel","aureliano-segundo","aureliano-jose","aureliano-babilonia","aurelianos-17"]},
+  {name:"Remedios",note:"Two characters share this name deliberately — García Márquez uses the echo to ask what innocence means across generations.",ids:["remedios-moscote","remedios-beauty"]},
+  {name:"Amaranta",note:"The name reappears in Amaranta Úrsula, combining two ancestral poles: Amaranta's passionate refusal and Úrsula's vital energy.",ids:["amaranta","amaranta-ursula"]},
+];
 let activeFilter=null,activeTheme=null;
 
+// ── People data ──────────────────────────────────────────────
 const people={
   "melquiades":{name:"Melquíades",role:"Gypsy sage; author of the prophetic manuscripts",gen:"Outside time",badges:["Sanskrit","Manuscripts","Beyond death"],parents:[],spouses:[],lovers:[],children:[],related:["jose-arcadio-buendia","aureliano-babilonia"],summary:"The gypsy who brings the outside world's wonders to Macondo and leaves behind parchments prophesying the Buendía family's entire history.",note:"He dies multiple times and keeps returning — he exists outside ordinary time.",
-    notes:{arc:"First appears bringing magnets and ice to Macondo. He dies and returns repeatedly — García Márquez suggests he exists outside temporal logic. He eventually takes up residence in his room in the Buendía house and writes the manuscripts in Sanskrit, encoding the entire history of the family from beginning to apocalyptic end. His ghost later guides Aureliano Segundo toward the parchments.",themes:"The author figure within the story — Melquíades wrote the book we are reading. He represents the circular relationship between prophecy and narrative: if the future is already written, is it still the future? His manuscripts collapse the distinction between history and fate, between author and God.",watch:"Note that every discovery José Arcadio Buendía makes has already been documented by Melquíades. He is not a teacher — he is a mirror showing what will be discovered before it is discovered. The room he inhabits never ages while the rest of the house crumbles around it."}},
+    notes:{arc:"First appears bringing magnets and ice to Macondo. He dies and returns repeatedly. He eventually writes the manuscripts in Sanskrit, encoding the entire history of the family from beginning to apocalyptic end.",themes:"The author figure within the story — Melquíades wrote the book we are reading. His manuscripts collapse the distinction between history and fate, between author and God.",watch:"Note that every discovery José Arcadio Buendía makes has already been documented by Melquíades. The room he inhabits never ages while the rest of the house crumbles around it."}},
   "jose-arcadio-buendia":{name:"José Arcadio Buendía",role:"Patriarch; founder of Macondo",gen:"Founding generation",badges:["Founder","Alchemy","Obsession"],parents:[],spouses:["ursula"],lovers:[],children:["jose-arcadio-son","aureliano-colonel","amaranta"],related:["ursula","jose-arcadio-son","aureliano-colonel","amaranta","rebeca","melquiades"],summary:"Visionary founder of Macondo whose curiosity becomes all-consuming obsession.",note:"He begins as a civilizing force but becomes one of the first major examples of solitude through intellectual isolation.",
-    notes:{arc:"Founds Macondo as a utopia of fresh beginning, then loses himself in successive obsessions — magnets, alchemy, the daguerreotype, astronomy — each promising total knowledge, each delivering only deeper isolation. He ends his life tied to a chestnut tree in the garden, speaking only in Latin, visited by the ghost of Prudencio Aguilar.",themes:"The tragedy of pure intellect divorced from human connection. His genius is real, but his inability to stop searching makes him Macondo's first prisoner of solitude — an explorer who can no longer return.",watch:"Notice how each obsession mirrors a stage of Macondo's own development. He is not mad — he is simply too early for the world he imagines. His chestnut tree becomes a kind of shrine that outlasts him."}},
+    notes:{arc:"Founds Macondo as a utopia of fresh beginning, then loses himself in successive obsessions — magnets, alchemy, the daguerreotype, astronomy. He ends his life tied to a chestnut tree in the garden, speaking only in Latin.",themes:"The tragedy of pure intellect divorced from human connection. His genius is real, but his inability to stop searching makes him Macondo's first prisoner of solitude.",watch:"Notice how each obsession mirrors a stage of Macondo's own development. His chestnut tree becomes a kind of shrine that outlasts him."}},
   "ursula":{name:"Úrsula Iguarán",role:"Matriarch; practical center of the family",gen:"Founding generation",badges:["Matriarch","Longevity","Family order"],parents:[],spouses:["jose-arcadio-buendia"],lovers:[],children:["jose-arcadio-son","aureliano-colonel","amaranta"],related:["jose-arcadio-buendia","jose-arcadio-son","aureliano-colonel","amaranta","rebeca"],summary:"The novel's moral spine, outliving almost everyone across perhaps 115 years.",note:"Her fear of incest and malformed descendants becomes one of the novel's recurring hereditary anxieties.",
-    notes:{arc:"Lives possibly 115–120 years, outlasting nearly everyone in the book. As her eyesight fails she develops an extraordinary inner map of the house — she 'sees' more blind than anyone else does with full sight. Her decline accelerates only when the house begins physically collapsing around her.",themes:"Practical wisdom, continuity, and the invisible labor that holds civilization together. She embodies everything the Buendía men destroy through their obsessions — and her tragedy is that she can see this happening but cannot stop it.",watch:"Track how she ages across the generations. Each time she is described she seems older and more remote, yet more perceptive. When she finally dies, the house begins its physical disintegration almost immediately."}},
+    notes:{arc:"Lives possibly 115–120 years, outlasting nearly everyone. As her eyesight fails she develops an extraordinary inner map of the house — she 'sees' more blind than anyone else does with full sight.",themes:"Practical wisdom, continuity, and the invisible labor that holds civilization together. Her tragedy is that she can see the family destroying itself but cannot stop it.",watch:"Track how she ages across the generations. When she finally dies, the house begins its physical disintegration almost immediately."}},
   "jose-arcadio-son":{name:"José Arcadio",role:"Eldest son; physical, impulsive, erotic energy",gen:"Second generation",badges:["Runs away","Returns","Marries Rebeca"],parents:["jose-arcadio-buendia","ursula"],spouses:["rebeca"],lovers:["pilar"],children:["arcadio"],related:["rebeca","pilar","arcadio","ursula","jose-arcadio-buendia","aureliano-colonel","amaranta"],summary:"The eldest Buendía son who flees with the gypsies and returns transformed.",note:"His marriage to Rebeca is taboo — she was raised as his adoptive sister, though not biologically.",
-    notes:{arc:"Leaves with the gypsies as a young man, returns with a body covered in tattoos and an overwhelming physical presence. He marries Rebeca over family objection. He is found dead with a gunshot wound — his blood runs through the house to find Úrsula — but who killed him and why is never resolved.",themes:"Raw physical appetite as the Buendía alternative to intellectual obsession. Both paths — intellect and body — lead to isolation, just through different corridors.",watch:"His mysterious death is deliberately unexplained. García Márquez treats cause and effect as optional in Macondo — some events simply occur and resist interpretation."}},
+    notes:{arc:"Leaves with the gypsies as a young man, returns with a body covered in tattoos. He is found dead with a gunshot wound — his blood runs through the house to find Úrsula — but who killed him and why is never resolved.",themes:"Raw physical appetite as the Buendía alternative to intellectual obsession. Both paths lead to isolation, just through different corridors.",watch:"His mysterious death is deliberately unexplained. García Márquez treats cause and effect as optional in Macondo — some events simply occur and resist interpretation."}},
   "aureliano-colonel":{name:"Aureliano Buendía",role:"Second son; later Colonel Aureliano Buendía",gen:"Second generation",badges:["Solitary","32 civil wars","Little gold fish"],parents:["jose-arcadio-buendia","ursula"],spouses:["remedios-moscote"],lovers:["pilar"],children:["aurelianos-17","aureliano-jose"],related:["remedios-moscote","pilar","jose-arcadio-son","amaranta","jose-arcadio-buendia","ursula"],summary:"The most complex figure in the novel — soldier, lover, artist, and the epitome of solitude.",note:"His arc moves from private feeling to public war, then back into radical isolation.",
-    notes:{arc:"Born with his eyes open, weeping in the womb. He fights 32 civil wars and loses all of them. He survives 14 assassination attempts, has 17 sons by 17 different women, and retreats finally into his workshop, endlessly making tiny gold fish — melting them down and starting over, never selling, never accumulating.",themes:"The hollowing cost of public life. The little gold fish are García Márquez's most precise image of futile, consoling repetition. War empties him of everything human, and he knows it.",watch:"The moment he orders the execution of his old friend Gerineldo Márquez — and then cancels it at the last second — is the pivot of his character. After that gesture of mercy, he withdraws completely."}},
+    notes:{arc:"Born with his eyes open, weeping in the womb. He fights 32 civil wars and loses all of them. He retreats finally into his workshop, endlessly making tiny gold fish — melting them down and starting over, never selling, never accumulating.",themes:"The hollowing cost of public life. The little gold fish are García Márquez's most precise image of futile, consoling repetition. War empties him of everything human.",watch:"The moment he orders the execution of his old friend Gerineldo Márquez — and then cancels it at the last second — is the pivot of his character. After that, he withdraws completely."}},
   "amaranta":{name:"Amaranta",role:"Daughter; jealousy, refusal, deliberate solitude",gen:"Second generation",badges:["Pietro Crespi","Black bandage","Weaves her shroud"],parents:["jose-arcadio-buendia","ursula"],spouses:[],lovers:["pietro-crespi"],children:[],related:["rebeca","pietro-crespi","jose-arcadio-son","aureliano-colonel","ursula"],summary:"Defines herself through systematic refusal and self-punishment.",note:"Keep her distinct from Rebeca: Amaranta is associated with the most explicit jealous hostility.",
-    notes:{arc:"Sabotages her own happiness from youth onward — manipulates Pietro Crespi away from Rebeca, then rejects him when he turns to her. She burns her own hand and wears a black bandage for life as self-punishment. She weaves her own burial shroud and calmly announces the date of her death, carrying letters to the dead as a trusted courier.",themes:"Self-inflicted solitude. Unlike other Buendías drawn outward by obsession, Amaranta turns every impulse toward love into an impulse toward refusal. She is not cruel by nature — she is terrified of happiness in a way she never fully understands.",watch:"Her relationship with her young nephew Aureliano José has an uncomfortable charge that García Márquez deliberately leaves ambiguous. The pattern — invite, then destroy — defines her entire emotional life."}},
+    notes:{arc:"Sabotages her own happiness from youth — manipulates Pietro Crespi away from Rebeca, then rejects him when he turns to her. She burns her own hand and wears a black bandage for life. She weaves her own burial shroud and calmly announces the date of her death.",themes:"Self-inflicted solitude. She turns every impulse toward love into an impulse toward refusal. She is not cruel by nature — she is terrified of happiness.",watch:"Her relationship with her young nephew Aureliano José has an uncomfortable charge that García Márquez deliberately leaves ambiguous. The pattern — invite, then destroy — defines her entire emotional life."}},
   "rebeca":{name:"Rebeca",role:"Adopted outsider; earth-eater; mystery",gen:"Second generation / adopted",badges:["Earth-eating","Sack of bones","The great enigma"],parents:[],spouses:["jose-arcadio-son"],lovers:["pietro-crespi"],children:[],related:["jose-arcadio-son","amaranta","ursula","jose-arcadio-buendia","pietro-crespi"],summary:"Arrives with a sack of her parents' bones and a compulsion to eat earth — and remains the novel's greatest unresolved mystery.",note:"Her marriage to José Arcadio causes scandal because it violates the household's adopted-sibling structure.",
-    notes:{arc:"Arrives as a child with a sack of bones and an uncontrollable habit of eating earth and plaster. Absorbed into the Buendía family, falls in love, marries José Arcadio over everyone's objection, is widowed mysteriously, and then simply withdraws from the narrative — alive but absent, in her shuttered house.",themes:"Radical outsiderhood that is never fully resolved. The earth she eats is mourning made physical — she literally consumes the ground.",watch:"She is the only major character whose fate is genuinely left open. García Márquez acknowledged he always meant to write her ending but never did. Her disappearance from the novel is itself a statement."}},
+    notes:{arc:"Arrives as a child with a sack of bones and an uncontrollable habit of eating earth. Absorbed into the Buendía family, falls in love, marries José Arcadio over everyone's objection, is widowed mysteriously, then simply withdraws from the narrative.",themes:"Radical outsiderhood that is never fully resolved. The earth she eats is mourning made physical — she literally consumes the ground.",watch:"She is the only major character whose fate is genuinely left open. Her disappearance from the novel is itself a statement: some people simply withdraw from history."}},
   "pilar":{name:"Pilar Ternera",role:"Lover, card-reader, mother, survivor",gen:"Macondo outsider",badges:["Cards","Two Buendía children","Century of presence"],parents:[],spouses:[],lovers:["jose-arcadio-son","aureliano-colonel"],children:["arcadio","aureliano-jose"],related:["jose-arcadio-son","aureliano-colonel","arcadio"],summary:"The novel's most durable figure — present in every generation as fortune-reader, lover, and archive of Macondo's erotic history.",note:"Not a Buendía by blood, but structurally central because she mothers Buendía descendants.",
-    notes:{arc:"Appears in the novel's first pages as a young woman and is still alive in the final pages, so old she has lost count of her age, running a brothel. She has children by two Buendía men, reads fortunes in cards with striking accuracy, and serves as the erotic memory of the town across an entire century.",themes:"Acceptance, fatalism, and erotic vitality as a form of wisdom. She is everything the Buendía characters are not — comfortable with uncertainty, unbothered by impermanence, never destroyed by loss.",watch:"She reads the future accurately for everyone except herself. Her self-knowledge is perfect in a different register: she knows exactly what she is doing and why, while the Buendías she serves are almost entirely without self-knowledge."}},
+    notes:{arc:"Appears in the novel's first pages as a young woman and is still alive in the final pages, so old she has lost count of her age. She serves as the erotic memory of the town across an entire century.",themes:"Acceptance, fatalism, and erotic vitality as a form of wisdom. She is everything the Buendía characters are not — comfortable with uncertainty, unbothered by impermanence, never destroyed by loss.",watch:"She reads the future accurately for everyone except herself. Her self-knowledge is perfect in a different register: she knows exactly what she is doing, while the Buendías are almost entirely without self-knowledge."}},
   "remedios-moscote":{name:"Remedios Moscote",role:"Child-bride of Colonel Aureliano; portrait of innocence",gen:"Second generation marriage connection",badges:["Child marriage","Pre-political innocence","Aureliano's only grief"],parents:[],spouses:["aureliano-colonel"],lovers:[],children:[],related:["aureliano-colonel"],summary:"The child-bride whose brief life reshapes Colonel Aureliano's entire trajectory.",note:"Her death functions as a rupture in Aureliano's emotional life from which he never recovers.",
     notes:{arc:"Married to Aureliano as a young girl. She grows into her role with remarkable grace. She dies of a complicated miscarriage. Her death occupies barely a paragraph, but its emotional weight reverberates through every subsequent chapter about the Colonel.",themes:"Innocence caught between an old world of arranged marriage and the political violence entering Macondo. She is what Macondo loses when history arrives.",watch:"Compare her carefully to Remedios the Beauty — same name, same apparent innocence, completely different relationship to the world. The doubling is deliberate."}},
   "arcadio":{name:"Arcadio",role:"Son of José Arcadio and Pilar Ternera; petty tyrant",gen:"Third generation",badges:["Unknown parentage","Local authority","Firing squad"],parents:["jose-arcadio-son","pilar"],spouses:["santa-sofia"],lovers:[],children:["remedios-beauty","jose-arcadio-segundo","aureliano-segundo"],related:["jose-arcadio-son","pilar","santa-sofia","remedios-beauty","jose-arcadio-segundo","aureliano-segundo"],summary:"Raised without knowing his parents, he becomes a local authoritarian during the civil war period.",note:"Major bridge between the early family romance plot and the later political-authoritarian plot.",
-    notes:{arc:"Grows up in the Buendía house without knowing his true parentage. When given local authority during the civil war he runs a petty tyranny with real cruelty. He is executed by firing squad. His final letters to Úrsula are the most tender writing in his section.",themes:"Orphaned identity producing authoritarian behavior. He shows how Buendía qualities — intensity, command, obsession — curdle into violence when stripped of grounding and family context.",watch:"His execution scene is emotionally precise. He thinks not of power or ideology but of Úrsula. The detail grounds the entire sequence in human grief rather than political drama."}},
+    notes:{arc:"Grows up in the Buendía house without knowing his true parentage. When given local authority during the civil war he runs a petty tyranny with real cruelty. He is executed by firing squad. His final letters to Úrsula are the most tender writing in his section.",themes:"Orphaned identity producing authoritarian behavior. He shows how Buendía qualities — intensity, command, obsession — curdle into violence when stripped of grounding and family context.",watch:"His execution scene is emotionally precise. He thinks not of power or ideology but of Úrsula."}},
   "santa-sofia":{name:"Santa Sofía de la Piedad",role:"Arcadio's partner; silent sustainer of the household",gen:"Third generation",badges:["Invisible labor","Generational endurance","Silent departure"],parents:[],spouses:["arcadio"],lovers:[],children:["remedios-beauty","jose-arcadio-segundo","aureliano-segundo"],related:["arcadio"],summary:"Works in the Buendía household for decades without a single scene of complaint or ambition.",note:"Her invisibility is a structural critique — García Márquez makes the erasure of her labor the point.",
-    notes:{arc:"Works in the Buendía household across multiple generations without a single scene foregrounding her inner life. She eventually walks out one day, quietly, and simply never returns. Her departure is noted in one sentence. No one goes to find her.",themes:"The erasure of women's sustaining labor. Her lack of interiority in the narrative is not García Márquez failing to write her — it is García Márquez writing the condition of her erasure.",watch:"Count how many meals she prepares, children she raises, catastrophes she quietly absorbs. She is the infrastructure on which Macondo runs."}},
+    notes:{arc:"Works in the Buendía household across multiple generations without a single scene foregrounding her inner life. She eventually walks out one day, quietly, and simply never returns. Her departure is noted in one sentence.",themes:"The erasure of women's sustaining labor. Her lack of interiority in the narrative IS the critique — she is made invisible by the people she serves.",watch:"Count how many meals she prepares, children she raises, catastrophes she quietly absorbs. She is the infrastructure on which Macondo runs."}},
   "aureliano-jose":{name:"Aureliano José",role:"Son of Colonel Aureliano and Pilar Ternera",gen:"Third generation",badges:["War as displacement","Aunt Amaranta","Ambush death"],parents:["aureliano-colonel","pilar"],spouses:[],lovers:[],children:[],related:["aureliano-colonel","pilar","amaranta"],summary:"Develops a consuming attachment to his aunt Amaranta, joins the war as displacement, and is killed in an ambush.",note:"His arc is the novel's most compressed version of the Buendía male pattern: obsession, futile action, death.",
-    notes:{arc:"Son of Colonel Aureliano and Pilar Ternera. Develops an intense attachment to his aunt Amaranta during the years of the colonel's wars — Amaranta initially encourages this and then abruptly, permanently refuses it. He joins the war partly as a displacement activity, and is killed in an ambush, dying in a stranger's arms.",themes:"Desire displaced by war, desire refused by family, desire finally cut short by violence. His arc is the novel's most compressed version of the Buendía male pattern.",watch:"He illuminates Amaranta by being one of several people whose love she both invites and destroys. The pattern — encourage, then refuse — seems systematic in her, not personal."}},
+    notes:{arc:"Son of Colonel Aureliano and Pilar Ternera. Develops an intense attachment to his aunt Amaranta during the colonel's wars — Amaranta initially encourages this and then abruptly refuses it. He joins the war partly as displacement, and is killed in an ambush.",themes:"Desire displaced by war, desire refused by family, desire cut short by violence. His arc is the novel's most compressed version of the Buendía male pattern.",watch:"He illuminates Amaranta by being one of several people whose love she both invites and destroys. The pattern — encourage, then refuse — seems systematic in her, not personal."}},
   "aurelianos-17":{name:"The Seventeen Aurelianos",role:"Colonel Aureliano's bastard sons, all identically named",gen:"War generation",badges:["Ash cross","Collective fate","Ritual massacre"],parents:["aureliano-colonel"],spouses:[],lovers:[],children:[],related:["aureliano-colonel"],summary:"Seventeen sons by seventeen different women, all named Aureliano — all eventually hunted down and killed.",note:"Their repetition literalizes the novel's central theme of doomed cyclical recurrence.",
-    notes:{arc:"The sons arrive in Macondo during Carnival, each bearing a different mother's surname but all sharing the name Aureliano. On Ash Wednesday they are all marked with ash crosses. They are subsequently hunted and killed one by one — all except one who escapes into legend — in a coordinated massacre.",themes:"The multiplication of identity into meaninglessness. The repeated name was meant to unify them with their father's legacy; instead it makes them interchangeable and collectively expendable.",watch:"Their mass killing is handled almost in passing, with remarkable narrative flatness. García Márquez refuses to dramatize it. The horror is precisely in the understatement."}},
+    notes:{arc:"The sons arrive in Macondo during Carnival, each bearing a different mother's surname but all sharing the name Aureliano. On Ash Wednesday they are marked with ash crosses. They are subsequently hunted and killed one by one in a coordinated massacre.",themes:"The multiplication of identity into meaninglessness. The repeated name was meant to unify them with their father's legacy; instead it makes them interchangeable and collectively expendable.",watch:"Their mass killing is handled in passing, with remarkable narrative flatness. García Márquez refuses to dramatize it. The horror is precisely in the understatement."}},
   "remedios-beauty":{name:"Remedios the Beauty",role:"Granddaughter of Arcadio; a being outside ordinary reality",gen:"Later generation",badges:["Men die nearby","Ascends to heaven","Beyond vanity"],parents:["arcadio","santa-sofia"],spouses:[],lovers:[],children:[],related:["arcadio","santa-sofia"],summary:"Her beauty is a metaphysical force — men fall ill and die in her presence, and she eventually ascends to heaven while folding sheets.",note:"Do not confuse her with Remedios Moscote — same name, entirely different register.",
-    notes:{arc:"Entirely without vanity or cruelty — she simply does not register that her presence destroys men. She wanders the house in a sheet because clothes are an incomprehensible convention. She ascends bodily to heaven one afternoon while folding sheets with Fernanda in the garden.",themes:"Beauty as a force outside human moral categories. She is neither saint nor femme fatale — she simply exceeds the world's capacity to process her.",watch:"Note that she causes no intentional harm. Every death in her vicinity is an accident of metaphysical intensity, not will. The social world's inability to leave her alone is what creates the damage."}},
+    notes:{arc:"Entirely without vanity or cruelty — she simply does not register that her presence destroys men. She wanders the house in a sheet because clothes are incomprehensible to her. She ascends bodily to heaven one afternoon while folding sheets in the garden.",themes:"Beauty as a force outside human moral categories. She is neither saint nor femme fatale — she simply exceeds the world's capacity to process her.",watch:"Note that she causes no intentional harm. Every death in her vicinity is an accident of metaphysical intensity, not will."}},
   "jose-arcadio-segundo":{name:"José Arcadio Segundo",role:"Twin; sole witness of the banana massacre",gen:"Later generation",badges:["Massacre survivor","Memory vs erasure","Melquíades' room"],parents:["arcadio","santa-sofia"],spouses:[],lovers:[],children:[],related:["aureliano-segundo","arcadio","santa-sofia"],summary:"Witnesses the mass killing of banana plantation workers — an atrocity subsequently erased from all official record.",note:"His experience is the novel's most direct engagement with Colombian political history.",
-    notes:{arc:"Witnesses soldiers massacring banana plantation strikers and escapes by hiding under the corpses. When he returns to Macondo, everyone insists the massacre never happened. He spends the rest of his life in Melquíades' room, eventually passing the key to decoding the manuscripts to the final Aureliano.",themes:"Historical erasure and the politics of memory. His isolation is not the Buendía solitude of obsession — it is the isolation of the man who has seen what the world refuses to remember. Based on the actual 1928 Ciénaga massacre in Colombia.",watch:"Pay careful attention to how systematically the outside world denies his testimony — newspapers, officials, neighbors, family. This is the novel's most politically explicit passage, and one of its most emotionally devastating."}},
+    notes:{arc:"Witnesses soldiers massacring banana plantation strikers and escapes by hiding under the corpses. When he returns to Macondo, everyone insists the massacre never happened. He spends the rest of his life in Melquíades' room, eventually passing the key to the manuscripts to Aureliano Babilonia.",themes:"Historical erasure and the politics of memory. His isolation is not Buendía solitude of obsession — it is the isolation of the man who has seen what the world refuses to remember. Based on the actual 1928 Ciénaga massacre in Colombia.",watch:"Pay careful attention to how systematically the outside world denies his testimony — newspapers, officials, neighbors, family. This is the novel's most politically explicit passage."}},
   "aureliano-segundo":{name:"Aureliano Segundo",role:"Twin; husband of Fernanda, companion of Petra",gen:"Later generation",badges:["Legendary excess","Two households","Rain and ruin"],parents:["arcadio","santa-sofia"],spouses:["fernanda"],lovers:["petra"],children:["renata","jose-arcadio-later","amaranta-ursula"],related:["fernanda","petra","renata","jose-arcadio-later","amaranta-ursula"],summary:"The jovial twin who leads a life of spectacular excess across two households until the rains destroy everything.",note:"His relationships create another doubled household structure that mirrors the family's broader patterns.",
-    notes:{arc:"Legendary for his feats of eating and celebration, he lives between his formal wife Fernanda and his true love Petra Cotes. The decade-long rain strips him of everything. He dies in the same hour as Fernanda, in different parts of the house, and both are buried in the same ceremony.",themes:"Abundance as its own kind of solitude. He is surrounded by food, people, and laughter, yet increasingly isolated from everything that matters. Generosity without depth is still a form of avoidance.",watch:"His raffle schemes to fund Meme's European education are among the novel's funniest and most tragicomic episodes — pure Buendía energy applied to an increasingly hopeless project, refusing to acknowledge that the world is ending."}},
+    notes:{arc:"Legendary for his feats of eating and celebration, he lives between his formal wife Fernanda and his true love Petra Cotes. The decade-long rain strips him of everything. He dies in the same hour as Fernanda, in different parts of the house, and both are buried in the same ceremony.",themes:"Abundance as its own kind of solitude. He is surrounded by food, people, and laughter, yet increasingly isolated from everything that matters.",watch:"His raffle schemes to fund Meme's European education are among the novel's funniest and most tragicomic episodes — pure Buendía energy applied to an increasingly hopeless project."}},
   "fernanda":{name:"Fernanda del Carpio",role:"Aristocratic wife of Aureliano Segundo",gen:"Later generation marriage connection",badges:["Invisible doctors","False grandeur","Self-delusion"],parents:[],spouses:["aureliano-segundo"],lovers:[],children:["renata","jose-arcadio-later","amaranta-ursula"],related:["aureliano-segundo"],summary:"Raised to be the queen of a kingdom that never materialised, she carries an aristocratic fiction into a household that runs on entirely different logic.",note:"She clashes structurally with the Buendía household's organic disorder — and loses, slowly.",
     notes:{arc:"Raised in a highland city to be a queen of a ceremony that never arrived. She conducts a years-long correspondence with invisible doctors who diagnose her remotely by mail. She dies still locked inside her own self-constructed grandeur.",themes:"Class pretension as a form of self-imprisonment. Her identity is entirely a social construction, and when the social world that constructed it collapses, she has no other self to draw on.",watch:"Her unsent letters show exactly how vast the gap between her self-image and reality has grown — and how thoroughly she has chosen the self-image."}},
   "petra":{name:"Petra Cotes",role:"Lover of Aureliano Segundo; abundance personified",gen:"Later generation",badges:["Animal fertility","Loyal companion","Survives the rains"],parents:[],spouses:[],lovers:["aureliano-segundo"],children:[],related:["aureliano-segundo"],summary:"Aureliano Segundo's true companion — her union with him generates magical animal fertility, and her loyalty outlasts everything the rains destroy.",note:"She is the novel's argument that vitality and generosity constitute their own moral order.",
-    notes:{arc:"Aureliano Segundo's companion for most of his adult life — never his formal wife, always his genuine partner. The animals on her property multiply supernaturally when she is with Aureliano Segundo. When the rains ruin their fortune, she works herself to exhaustion to support them both.",themes:"Love without institutionalization, abundance without greed. She is perhaps the most straightforwardly life-affirming female character in the novel — clear-eyed about her situation, unbothered by convention, generous without martyrdom.",watch:"García Márquez is explicit that the miraculous animal fertility is contingent on the joy of their union. Vitality, the novel argues, is a shared condition, not an individual property."}},
+    notes:{arc:"Aureliano Segundo's companion for most of his adult life — never his formal wife, always his genuine partner. The animals on her property multiply supernaturally when she is with him. When the rains ruin their fortune, she works herself to exhaustion to support them both.",themes:"Love without institutionalization, abundance without greed. She is perhaps the most straightforwardly life-affirming female character in the novel.",watch:"García Márquez is explicit that the miraculous animal fertility is contingent on the joy of their union. Vitality, the novel argues, is a shared condition, not an individual property."}},
   "renata":{name:"Renata Remedios (Meme)",role:"Daughter of Aureliano Segundo and Fernanda",gen:"Final generations",badges:["Meme","Yellow butterflies","Permanent silence"],parents:["aureliano-segundo","fernanda"],spouses:[],lovers:["mauricio"],children:["aureliano-babilonia"],related:["mauricio","aureliano-babilonia"],summary:"Known as Meme — her love affair with Mauricio Babilonia ends with his paralysis and her lifelong silence in a convent.",note:"Her silence after her mother's intervention is never psychologically explained — the ambiguity between choice and trauma is deliberate.",
-    notes:{arc:"Goes by Meme throughout. Her love affair with the mechanic Mauricio Babilonia — always heralded by yellow butterflies — is the novel's most purely romantic subplot. Fernanda arranges for Mauricio to be shot while climbing to see Meme, paralyzing him for life. Meme is immediately sent to a convent, where she maintains total silence until her death.",themes:"The destruction of eros by class anxiety and maternal control. Fernanda's intervention — motivated entirely by social prejudice about Mauricio's working-class origins — is the novel's most precise act of domestic violence.",watch:"Meme's silence after her mother's action is never explained as breakdown, rage, or grief — it is simply described as a fact. The refusal to psychologize it is one of García Márquez's most powerful narrative choices."}},
+    notes:{arc:"Goes by Meme throughout. Her love affair with the mechanic Mauricio Babilonia — always heralded by yellow butterflies — is the novel's most purely romantic subplot. Fernanda has Mauricio shot while he is climbing to see Meme, paralyzing him for life. Meme is immediately sent to a convent, where she maintains total silence until her death.",themes:"The destruction of eros by class anxiety and maternal control. Fernanda's intervention — motivated entirely by social prejudice — is the novel's most precise act of domestic violence.",watch:"Meme's silence is never explained as breakdown, rage, or grief — it is simply described as a fact. The refusal to psychologize it is one of García Márquez's most powerful narrative choices."}},
   "jose-arcadio-later":{name:"José Arcadio",role:"Son of Aureliano Segundo; failed seminarian",gen:"Final generations",badges:["Rome","Luxury baths","Gothic end"],parents:["aureliano-segundo","fernanda"],spouses:[],lovers:[],children:[],related:["aureliano-segundo","fernanda"],summary:"Sent by Fernanda to Rome to train for the papacy — returns having spent the money on pleasure, and is murdered in his bath.",note:"Distinguish carefully from José Arcadio Buendía (patriarch) and José Arcadio (eldest son).",
-    notes:{arc:"Fernanda sends him to Rome, convinced he is destined for the papacy. He returns after her death having spent the seminary money on every luxury. He fills the old house with exquisite objects, takes in local children, and is found drowned in his bath — apparently by those same children.",themes:"Religious vocation hollowed into pure privilege. He represents the final stage of Buendía decay — intellect and physicality both exhausted, replaced by a performance of refinement with nothing behind it.",watch:"His bath is described in obsessive sensory detail. García Márquez uses luxury as a diagnostic sign of moral vacancy throughout the novel, and this scene is the most explicit instance."}},
+    notes:{arc:"Fernanda sends him to Rome, convinced he is destined for the papacy. He returns after her death having spent the seminary money on every luxury. He fills the old house with exquisite objects and is found drowned in his bath.",themes:"Religious vocation hollowed into pure privilege. He represents the final stage of Buendía decay — intellect and physicality both exhausted, replaced by a performance of refinement with nothing behind it.",watch:"His bath is described in obsessive sensory detail. García Márquez uses luxury as a diagnostic sign of moral vacancy throughout the novel, and this scene is the most explicit instance."}},
   "amaranta-ursula":{name:"Amaranta Úrsula",role:"Last vital Buendía; determined to save Macondo",gen:"Final generations",badges:["Returns from Europe","The last energy","Husband on a rope"],parents:["aureliano-segundo","fernanda"],spouses:[],lovers:["aureliano-babilonia"],children:[],related:["aureliano-babilonia"],summary:"Returns from Brussels with enormous vital energy — the last Buendía with genuine will to live — but arrives too late.",note:"Her name combines two earlier poles of the family: Amaranta's passion and refusal, Úrsula's energy and clarity.",
-    notes:{arc:"Returns from studying in Europe with her husband Gaston on a playful leash — she literally leads him by a rope. She sets about restoring Macondo with genuine Buendía intensity, unaware that it is dying. Her incestuous relationship with Aureliano Babilonia produces the child with a pig's tail. She dies of hemorrhage after the birth.",themes:"The tragedy of vitality applied to an already-decided fate. She has all the energy of the early Buendías but arrives in the last chapter. Her death fulfills the family's founding curse — and makes the novel's ending feel not like failure but like completion.",watch:"Her husband Gaston is a quietly fascinating peripheral figure — entirely reasonable, entirely outmatched. He retreats to Brussels and writes cheerful letters that Amaranta Úrsula stops opening."}},
+    notes:{arc:"Returns from studying in Europe with her husband Gaston on a playful leash — she literally leads him by a rope. She sets about restoring Macondo with genuine Buendía intensity, unaware that it is dying. Her incestuous relationship with Aureliano Babilonia produces the child with a pig's tail. She dies of hemorrhage after the birth.",themes:"The tragedy of vitality applied to an already-decided fate. She has all the energy of the early Buendías but arrives in the last chapter.",watch:"Her husband Gaston is a quietly fascinating peripheral figure — entirely reasonable, entirely outmatched. He retreats to Brussels and writes cheerful letters that Amaranta Úrsula stops opening."}},
   "mauricio":{name:"Mauricio Babilonia",role:"Meme's lover; surrounded by yellow butterflies",gen:"Final generations connection",badges:["Yellow butterflies","Mechanic","Paralyzed by class"],parents:[],spouses:[],lovers:["renata"],children:["aureliano-babilonia"],related:["renata","aureliano-babilonia"],summary:"A mechanic always surrounded by yellow butterflies — his love for Meme is genuine and reciprocal, destroyed by Fernanda's class prejudice.",note:"The butterflies are one of the novel's most famous magical-realist signatures, and one of the few García Márquez never explains.",
-    notes:{arc:"Works as a mechanic at the banana company. Yellow butterflies appear before he does and linger after he leaves. His relationship with Meme is warm and reciprocal. Fernanda has him shot while he is climbing to see Meme, paralyzing him permanently. He dies years later in obscurity.",themes:"Working-class desire destroyed by bourgeois prejudice. He is one of the novel's most sympathetic figures precisely because he wants nothing extraordinary — only to be with the person he loves — and this simple want is what kills him.",watch:"The yellow butterflies appear before Mauricio does and stop appearing after he is paralyzed. They are harbingers, not decorations — their absence marks the point at which something has permanently ended."}},
+    notes:{arc:"Works as a mechanic at the banana company. Yellow butterflies appear before he does and linger after he leaves. Fernanda has him shot while he is climbing to see Meme, paralyzing him permanently. He dies years later in obscurity.",themes:"Working-class desire destroyed by bourgeois prejudice. He is one of the novel's most sympathetic figures — he wants nothing extraordinary, only to be with the person he loves — and this simple want is what kills him.",watch:"The yellow butterflies appear before Mauricio and stop appearing after he is paralyzed. They are harbingers, not decorations — their absence marks the point at which something has permanently ended."}},
   "aureliano-babilonia":{name:"Aureliano Babilonia",role:"Final Aureliano; reader of the manuscripts",gen:"Final generation",badges:["Sanskrit","Melquíades' manuscripts","Last Buendía"],parents:["renata","mauricio"],spouses:[],lovers:["amaranta-ursula"],children:[],related:["renata","mauricio","amaranta-ursula","melquiades"],summary:"Raised in isolation, teaches himself Sanskrit, and decodes the manuscripts — which describe the entire Buendía history including the moment of his reading.",note:"He is simultaneously the last Buendía, the last reader, and the reader's surrogate at the novel's catastrophic ending.",
-    notes:{arc:"Hidden from Fernanda, raised in near-total isolation in Melquíades' room. Teaches himself Sanskrit to read the parchments. When he finally decodes them, he discovers they are a history of the Buendía family written a century earlier, predicting every event precisely — including the moment of his reading. Macondo is destroyed by a biblical wind as he finishes the final page.",themes:"The reader as the last Buendía. His decoding of the manuscripts mirrors the reader's experience of the novel — both arrive at the catastrophic ending at the same moment, both discover they have been reading their own fate.",watch:"The manuscript's final prophecy — that the city of mirrors will be wiped out by wind and exiled from the memory of men — is the novel's last sentence in disguise. García Márquez collapses author, character, and reader into a single moment of annihilation."}},
+    notes:{arc:"Hidden from Fernanda, raised in near-total isolation in Melquíades' room. Teaches himself Sanskrit to read the parchments. When he finally decodes them, he discovers they are a history of the Buendía family written a century earlier, predicting every event precisely — including the moment of his reading. Macondo is destroyed by a biblical wind as he finishes the final page.",themes:"The reader as the last Buendía. His decoding of the manuscripts mirrors the reader's experience of the novel — both arrive at the catastrophic ending at the same moment.",watch:"The manuscript's final prophecy — that the city of mirrors will be wiped out by wind and exiled from the memory of men — is the novel's last sentence in disguise."}},
   "pietro-crespi":{name:"Pietro Crespi",role:"Italian technician; object of the sisters' rivalry",gen:"Romantic connection",badges:["Pianola","Balletic patience","Flower-petal suicide"],parents:[],spouses:[],lovers:["rebeca","amaranta"],children:[],related:["rebeca","amaranta"],summary:"A refined Italian whose courtship of Rebeca is sabotaged by Amaranta, and whose subsequent courtship of Amaranta ends in suicide.",note:"His gentleness makes him incompatible with the Buendía household's emotional extremity.",
-    notes:{arc:"Arrives to install a pianola and becomes a social sensation. He courts Rebeca with balletic patience until Amaranta manipulates him away. He redirects his love to Amaranta, who encourages then refuses him. He kills himself surrounded by flower petals and musical instruments.",themes:"European civilization meeting New World appetite for emotional destruction. His tragedy is that he takes social forms — courtship, patience, declaration — at face value, not understanding that in the Buendía house these forms are weapons.",watch:"His suicide is treated by the family as a social inconvenience rather than a tragedy. Only Úrsula genuinely grieves. The speed with which everyone else moves on is quietly appalling."}}
+    notes:{arc:"Arrives to install a pianola and becomes a social sensation. He courts Rebeca with balletic patience until Amaranta manipulates him away. He redirects his love to Amaranta, who encourages then refuses him. He kills himself surrounded by flower petals and musical instruments.",themes:"European civilization meeting New World appetite for emotional destruction. His tragedy is that he takes social forms at face value, not understanding that in the Buendía house these forms are weapons.",watch:"His suicide is treated by the family as a social inconvenience rather than a tragedy. Only Úrsula genuinely grieves. The speed with which everyone else moves on is quietly appalling."}}
 };
 
+// ── DOM refs ─────────────────────────────────────────────────
 const cards=[...document.querySelectorAll('.person')];
 const treeEl=document.getElementById('tree');
-const canvasEl=document.querySelector('.canvas-wrap');
-let svgEl;
+const canvasWrap=document.getElementById('canvasWrap');
 
-// Arrowhead geometry constants (pixels)
-const AL=15, AW=14; // length along path, width perpendicular
+// ── SVG connection lines ──────────────────────────────────────
+// Fresh implementation — no dependency on previous iterations
+let svgCanvas=null;
 
 function initSVG(){
-  svgEl=document.createElementNS('http://www.w3.org/2000/svg','svg');
-  svgEl.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:2;';
-  treeEl.appendChild(svgEl);
+  svgCanvas=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svgCanvas.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:2;';
+  treeEl.appendChild(svgCanvas);
 }
 
-function getRect(c){const cr=c.getBoundingClientRect(),tr=treeEl.getBoundingClientRect();return{x:cr.left-tr.left,y:cr.top-tr.top,w:cr.width,h:cr.height};}
-function edgePt(r,tx,ty){const cx=r.x+r.w/2,cy=r.y+r.h/2,dx=tx-cx,dy=ty-cy;if(!dx&&!dy)return{x:cx,y:cy};const s=Math.min(r.w/2/Math.abs(dx||.0001),r.h/2/Math.abs(dy||.0001));return{x:cx+dx*s,y:cy+dy*s};}
-function makePath(ax,ay,bx,by,i,isAdj){
-  if(isAdj)return`M${ax} ${ay} L${bx} ${by}`;
-  if(Math.abs(by-ay)<50){const arc=(i%2===0?-1:1)*60,mx=(ax+bx)/2;return`M${ax} ${ay} Q${mx} ${ay+arc} ${bx} ${by}`;}
-  const my=(ay+by)/2;return`M${ax} ${ay} C${ax} ${my} ${bx} ${my} ${bx} ${by}`;
+function clearLines(){
+  if(!svgCanvas)return;
+  svgCanvas.querySelectorAll('path').forEach(n=>n.remove());
 }
-function clearArrows(){svgEl&&svgEl.querySelectorAll('path').forEach(p=>p.remove());}
 
-function drawArrows(selId){
-  clearArrows();
-  const sc=cards.find(c=>c.dataset.id===selId);if(!sc)return;
-  const p=people[selId],sr=getRect(sc),scx=sr.x+sr.w/2,scy=sr.y+sr.h/2;
-  const types=activeFilter?FILTER_TYPES[activeFilter]:REL_TYPES;
-  types.forEach(type=>{
-    (p[type]||[]).forEach((rid,i)=>{
+function buildPath(x1,y1,x2,y2){
+  const dx=x2-x1,dy=y2-y1,ax=Math.abs(dx),ay=Math.abs(dy);
+  // Adjacent cards: border points within 100px → plain straight line, no curve
+  if(dx*dx+dy*dy<100*100)return`M${x1} ${y1} L${x2} ${y2}`;
+  if(ax>ay*2){
+    // Non-adjacent horizontal: arch above row to avoid blocking card content
+    const h=Math.min(Math.max(80,ax*0.25),150);
+    return`M${x1} ${y1} C${x1} ${y1-h} ${x2} ${y2-h} ${x2} ${y2}`;
+  }
+  // Vertical/diagonal: tension curve
+  const t=Math.max(ay*0.45,60),sg=dy>=0?1:-1;
+  return`M${x1} ${y1} C${x1} ${y1+sg*t} ${x2} ${y2-sg*t} ${x2} ${y2}`;
+}
+function addLine(x1,y1,x2,y2,color,sw,op){
+  const el=document.createElementNS('http://www.w3.org/2000/svg','path');
+  el.setAttribute('d',buildPath(x1,y1,x2,y2));
+  el.setAttribute('stroke',color);
+  el.setAttribute('stroke-width',String(sw));
+  el.setAttribute('fill','none');
+  el.setAttribute('opacity',String(op));
+  el.setAttribute('stroke-linecap','round');
+  svgCanvas.appendChild(el);
+}
+
+function cardRect(card){
+  const cr=card.getBoundingClientRect(),tr=treeEl.getBoundingClientRect();
+  const x=cr.left-tr.left,y=cr.top-tr.top,w=cr.width,h=cr.height;
+  return{x,y,w,h,cx:x+w/2,cy:y+h/2};
+}
+
+function borderPoint(r,tcx,tcy){
+  const dx=tcx-r.cx,dy=tcy-r.cy;
+  if(!dx&&!dy)return{x:r.cx,y:r.cy};
+  // Snap to the CENTER of the nearest cardinal side (not the exact diagonal direction).
+  // Without snapping, diagonal connections land near card corners whose mutual distance
+  // can be <100px even for non-adjacent cards, falsely triggering the straight-line path.
+  if(Math.abs(dx)>=Math.abs(dy))
+    return dx>0?{x:r.x+r.w,y:r.cy}:{x:r.x,y:r.cy};
+  return dy>0?{x:r.cx,y:r.y+r.h}:{x:r.cx,y:r.y};
+}
+
+function drawConnections(selId){
+  clearLines();
+  const sc=cards.find(c=>c.dataset.id===selId);
+  if(!sc||!svgCanvas)return;
+  const pd=people[selId];if(!pd)return;
+  const sr=cardRect(sc);
+  (activeFilter?FILTER_TYPES[activeFilter]:REL_TYPES).forEach(type=>{
+    (pd[type]||[]).forEach(rid=>{
       const rc=cards.find(c=>c.dataset.id===rid);if(!rc)return;
-      const rr=getRect(rc),rcx=rr.x+rr.w/2,rcy=rr.y+rr.h/2;
-      const s=edgePt(sr,rcx,rcy),e=edgePt(rr,scx,scy);
+      const dr=cardRect(rc);
+      const s=borderPoint(sr,dr.cx,dr.cy);
+      const e=borderPoint(dr,sr.cx,sr.cy);
       const isSp=type==='spouses';
-      const isAdj=Math.abs(s.y-e.y)<20&&Math.abs(s.x-e.x)<80;
-      const col=COLORS[type],sw=isSp?'11.4':'4.4',op=isSp?'0.53':'0.62';
-      // Build path — shorten endpoint by AL so arrowhead sits outside the stroke
-      let pathD;
-      if(isAdj){pathD=`M${s.x} ${s.y} L${e.x} ${e.y}`;}
-      else if(Math.abs(e.y-s.y)<50){
-        const arc=(i%2===0?-1:1)*60,mx=(s.x+e.x)/2;
-        if(isSp){pathD=`M${s.x} ${s.y} Q${mx} ${s.y+arc} ${e.x} ${e.y}`;}
-        else{const dx=e.x-mx,dy=e.y-(s.y+arc),len=Math.sqrt(dx*dx+dy*dy)||1,ux=dx/len,uy=dy/len;pathD=`M${s.x} ${s.y} Q${mx} ${s.y+arc} ${e.x-ux*AL} ${e.y-uy*AL}`;}
-      } else {
-        const my=(s.y+e.y)/2,sgn=e.y>my?1:-1;
-        pathD=isSp?`M${s.x} ${s.y} C${s.x} ${my} ${e.x} ${my} ${e.x} ${e.y}`:`M${s.x} ${s.y} C${s.x} ${my} ${e.x} ${my} ${e.x} ${e.y-sgn*AL}`;
-      }
-      const path=document.createElementNS('http://www.w3.org/2000/svg','path');
-      path.setAttribute('d',pathD);path.setAttribute('stroke',col);
-      path.setAttribute('stroke-width',sw);path.setAttribute('fill','none');
-      path.setAttribute('opacity',op);path.setAttribute('stroke-linecap','round');
-      svgEl.appendChild(path);
-      // Draw arrowhead as a plain polygon — no SVG markers, no coordinate-system confusion
-      if(!isSp&&!isAdj){
-        let pts;
-        if(Math.abs(e.y-s.y)<50){
-          // Quadratic: derive approach direction from control point → endpoint
-          const arc=(i%2===0?-1:1)*60,mx=(s.x+e.x)/2;
-          const dx=e.x-mx,dy=e.y-(s.y+arc),len=Math.sqrt(dx*dx+dy*dy)||1;
-          const ux=dx/len,uy=dy/len,px=-uy,py=ux;
-          const bx2=e.x-ux*AL,by2=e.y-uy*AL;
-          pts=`${bx2+px*AW/2},${by2+py*AW/2} ${e.x},${e.y} ${bx2-px*AW/2},${by2-py*AW/2}`;
-        } else {
-          // Cubic: always arrives vertically (control pt is directly above/below endpoint)
-          const my=(s.y+e.y)/2,sgn=e.y>my?1:-1,by2=e.y-sgn*AL;
-          pts=`${e.x-AW/2},${by2} ${e.x+AW/2},${by2} ${e.x},${e.y}`;
-        }
-        const arrow=document.createElementNS('http://www.w3.org/2000/svg','polygon');
-        arrow.setAttribute('points',pts);arrow.setAttribute('fill',col);arrow.setAttribute('opacity',op);
-        svgEl.appendChild(arrow);
-      }
+      addLine(s.x,s.y,e.x,e.y,COLORS[type],isSp?11:2.5,isSp?0.55:0.8);
     });
   });
 }
 
-function drawGlobalArrows(types){
-  clearArrows();const drawn=new Set();
+function drawAllConnections(types){
+  clearLines();if(!svgCanvas)return;
+  const drawn=new Set();
   const dt=types.includes('children')?types.filter(t=>t!=='parents'):types;
   cards.forEach(card=>{
-    const id=card.dataset.id,p=people[id];if(!p)return;
+    const id=card.dataset.id,pd=people[id];if(!pd)return;
     dt.forEach(type=>{
-      (p[type]||[]).forEach((rid,i)=>{
+      (pd[type]||[]).forEach(rid=>{
         const key=[id,rid].sort().join('|');if(drawn.has(key))return;drawn.add(key);
         const rc=cards.find(c=>c.dataset.id===rid);if(!rc)return;
-        const sr=getRect(card),rr=getRect(rc);
-        const s=edgePt(sr,rr.x+rr.w/2,rr.y+rr.h/2),e=edgePt(rr,sr.x+sr.w/2,sr.y+sr.h/2);
-        const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+        const sr=cardRect(card),dr=cardRect(rc);
+        const s=borderPoint(sr,dr.cx,dr.cy),e=borderPoint(dr,sr.cx,sr.cy);
         const isSp=type==='spouses';
-        const isAdj=Math.abs(s.y-e.y)<20&&Math.abs(s.x-e.x)<80;
-        path.setAttribute('d',makePath(s.x,s.y,e.x,e.y,i,isAdj));
-        path.setAttribute('stroke',COLORS[type]);path.setAttribute('stroke-width',isSp?'9':'3.6');
-        path.setAttribute('fill','none');path.setAttribute('opacity','0.35');
-        path.setAttribute('stroke-linecap',isSp?'round':'butt');
-        if(!isSp)path.setAttribute('marker-end','url(#arr-'+type+')');
-        svgEl.appendChild(path);
+        addLine(s.x,s.y,e.x,e.y,COLORS[type],isSp?6:1.8,0.45);
       });
     });
   });
 }
 
+// ── Physics ───────────────────────────────────────────────────
 const SPRING_K=0.10,PAD=14,MAX_ITER=15;
 let allFreed=false,simRAF=null,fixedCard=null;
 const origGridPos=new Map(),homePos=new Map(),origDOM=new Map();
@@ -379,8 +426,9 @@ function freeAll(){
   if(allFreed)return;allFreed=true;
   const tr=treeEl.getBoundingClientRect();
   treeEl.style.minHeight=treeEl.scrollHeight+'px';
-  const cSnap=new Map(),titles=[...treeEl.querySelectorAll('.gen-title')];
+  const cSnap=new Map();
   cards.forEach(c=>{const r=c.getBoundingClientRect();cSnap.set(c,{x:r.left-tr.left,y:r.top-tr.top,w:r.width,h:r.height});origDOM.set(c,{parent:c.parentNode,next:c.nextSibling});});
+  const titles=[...treeEl.querySelectorAll('.gen-title')];
   const tSnap=new Map();
   titles.forEach(t=>{const r=t.getBoundingClientRect();tSnap.set(t,{x:r.left-tr.left,y:r.top-tr.top});origTitleDOM.set(t,{parent:t.parentNode,next:t.nextSibling});const g=t.closest('.generation');titleCardMap.set(t,g?cards.filter(c=>g.contains(c)):[]);});
   cards.forEach(c=>{const p=cSnap.get(c);origGridPos.set(c,{...p});homePos.set(c,{...p});treeEl.appendChild(c);c.style.cssText=`position:absolute;left:${p.x}px;top:${p.y}px;width:${p.w}px;z-index:10;`;});
@@ -414,56 +462,97 @@ function simStep(){
 
 function scheduleFrame(){
   if(simRAF)return;
-  simRAF=requestAnimationFrame(()=>{simRAF=null;if(!allFreed)return;const d=simStep();updateTitlePositions();const sel=document.querySelector('.person.selected');if(sel)drawArrows(sel.dataset.id);if(!fixedCard&&d>0.3)scheduleFrame();});
+  simRAF=requestAnimationFrame(()=>{simRAF=null;if(!allFreed)return;const d=simStep();updateTitlePositions();const sel=document.querySelector('.person.selected');if(sel)drawConnections(sel.dataset.id);if(!fixedCard&&d>0.3)scheduleFrame();});
 }
 
-// Canvas pan — works on .canvas-wrap which no longer contains the legend
-canvasEl.addEventListener('mousedown',e=>{
-  if(e.button!==0||e.target.closest('.person'))return;
-  e.preventDefault();canvasEl.classList.add('panning');
-  const sx=e.clientX+canvasEl.scrollLeft,sy=e.clientY+canvasEl.scrollTop;
-  const mm=me=>{canvasEl.scrollLeft=sx-me.clientX;canvasEl.scrollTop=sy-me.clientY;};
-  const mu=()=>{canvasEl.classList.remove('panning');document.removeEventListener('mousemove',mm);document.removeEventListener('mouseup',mu);};
+// ── Canvas pan ────────────────────────────────────────────────
+canvasWrap.addEventListener('mousedown',e=>{
+  if(e.button!==0||e.target.closest('.person,.legend'))return;
+  e.preventDefault();canvasWrap.classList.add('panning');
+  const sx=e.clientX+canvasWrap.scrollLeft,sy=e.clientY+canvasWrap.scrollTop;
+  const mm=me=>{canvasWrap.scrollLeft=sx-me.clientX;canvasWrap.scrollTop=sy-me.clientY;};
+  const mu=()=>{canvasWrap.classList.remove('panning');document.removeEventListener('mousemove',mm);document.removeEventListener('mouseup',mu);};
   document.addEventListener('mousemove',mm);document.addEventListener('mouseup',mu);
 });
 
-const popupEl=document.getElementById('char-popup');
-const backdropEl=document.getElementById('popup-backdrop');
-
-function openPopup(id){
-  const p=people[id];if(!p||!p.notes)return;
+// ── Character notes popup ─────────────────────────────────────
+function openNotes(id){
+  const pd=people[id];if(!pd||!pd.notes)return;
   selectPerson(id);
-  const gc=GEN_COLORS[p.gen]||'rgba(255,255,255,.3)';
+  const gc=GEN_COLORS[pd.gen]||'rgba(255,255,255,.3)';
   const av=document.getElementById('popup-avatar');
-  av.textContent=initials(p.name);
-  av.style.cssText=`background:${gc}20;border-color:${gc}60;color:${gc};`;
-  document.getElementById('popup-name').textContent=p.name;
-  document.getElementById('popup-role').textContent=p.role;
-  const genEl=document.getElementById('popup-gen');
-  genEl.className='popup-gen';genEl.textContent=p.gen;
-  genEl.style.cssText=`background:${gc}18;border:1px solid ${gc}44;color:${gc};`;
-  const rels=[popupRelNav('Spouses',p.spouses,COLORS.spouses),popupRelNav('Parents',p.parents,COLORS.parents),popupRelNav('Children',p.children,COLORS.children),popupRelNav('Lovers',p.lovers,COLORS.lovers)].filter(Boolean).join('');
+  av.textContent=initials(pd.name);av.style.cssText=`background:${gc}20;border-color:${gc}60;color:${gc};`;
+  document.getElementById('popup-name').textContent=pd.name;
+  document.getElementById('popup-role').textContent=pd.role;
+  const genEl=document.getElementById('popup-gen');genEl.className='popup-gen';genEl.textContent=pd.gen;genEl.style.cssText=`background:${gc}18;border:1px solid ${gc}44;color:${gc};`;
+  const rels=[relNav('Spouses',pd.spouses,COLORS.spouses),relNav('Parents',pd.parents,COLORS.parents),relNav('Children',pd.children,COLORS.children),relNav('Lovers',pd.lovers,COLORS.lovers)].filter(Boolean).join('');
   document.getElementById('popup-body').innerHTML=`
-    <div class="popup-section arc"><h4>Arc in the novel</h4><p>${p.notes.arc}</p></div>
-    <div class="popup-section themes-sec"><h4>Themes &amp; significance</h4><p>${p.notes.themes}</p></div>
-    <div class="popup-section watch"><h4>What to watch for</h4><p>${p.notes.watch}</p></div>
+    <div class="popup-section arc"><h4>Arc in the novel</h4><p>${pd.notes.arc}</p></div>
+    <div class="popup-section themes-sec"><h4>Themes &amp; significance</h4><p>${pd.notes.themes}</p></div>
+    <div class="popup-section watch"><h4>What to watch for</h4><p>${pd.notes.watch}</p></div>
     ${rels?`<div class="popup-section rels"><h4>Relationships</h4>${rels}</div>`:''}`;
-  popupEl.classList.remove('hidden');backdropEl.classList.remove('hidden');
+  document.getElementById('char-popup').classList.remove('hidden');
+  document.getElementById('notes-backdrop').classList.remove('hidden');
 }
-
-function popupRelNav(label,ids,color){
+function relNav(label,ids,color){
   const valid=(ids||[]).filter(id=>people[id]&&people[id].notes);
   if(!valid.length)return'';
-  return`<div class="popup-rel-group">
-    <span class="popup-rel-label" style="color:${color};">${label}</span>
-    ${valid.map(id=>`<button class="popup-nav-btn" onclick="openPopup('${id}')" style="background:${color}18;border:1px solid ${color}44;">${people[id].name}</button>`).join('')}
-  </div>`;
+  return`<div class="popup-rel-group"><span class="popup-rel-label" style="color:${color};">${label}</span>${valid.map(id=>`<button class="popup-nav-btn" onclick="openNotes('${id}')" style="background:${color}18;border:1px solid ${color}44;">${people[id].name}</button>`).join('')}</div>`;
 }
+function closeNotes(){document.getElementById('char-popup').classList.add('hidden');document.getElementById('notes-backdrop').classList.add('hidden');}
+document.getElementById('notes-close').addEventListener('click',closeNotes);
+document.getElementById('notes-backdrop').addEventListener('click',closeNotes);
+window.openNotes=openNotes;
 
-function closePopup(){popupEl.classList.add('hidden');backdropEl.classList.add('hidden');}
-document.getElementById('popup-close').addEventListener('click',closePopup);
-backdropEl.addEventListener('click',closePopup);
+// ── Name Twins popup ──────────────────────────────────────────
+function openTwins(){
+  const body=document.getElementById('twins-body');
+  body.innerHTML=NAME_TWINS.map(group=>`
+    <div>
+      <div class="twin-group-name">${group.name}</div>
+      <p class="twin-group-note">${group.note}</p>
+      <div class="twin-cards-row">
+        ${group.ids.map(id=>{
+          const pd=people[id];if(!pd)return'';
+          const gc=GEN_COLORS[pd.gen]||'#888';
+          return`<div class="twin-card">
+            <div style="display:flex;align-items:center;gap:9px;">
+              <div class="twin-avatar" style="background:${gc}22;border-color:${gc}55;color:${gc};">${initials(pd.name)}</div>
+              <div>
+                <div class="twin-card-name">${pd.name}</div>
+                <span class="twin-gen-badge" style="background:${gc}18;border:1px solid ${gc}44;color:${gc};">${pd.gen}</span>
+              </div>
+            </div>
+            <div class="twin-role">${pd.role}</div>
+            <div class="badges">${pd.badges.slice(0,3).map(b=>`<span class="badge">${b}</span>`).join('')}</div>
+            <button class="twin-view-btn" onclick="viewFromTwins('${id}')">View on canvas →</button>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('twins-popup').classList.remove('hidden');
+  document.getElementById('twins-backdrop').classList.remove('hidden');
+}
+function closeTwins(){document.getElementById('twins-popup').classList.add('hidden');document.getElementById('twins-backdrop').classList.add('hidden');}
+window.viewFromTwins=function(id){
+  closeTwins();selectPerson(id);
+  const card=cards.find(c=>c.dataset.id===id);if(!card)return;
+  const cr=card.getBoundingClientRect(),wr=canvasWrap.getBoundingClientRect();
+  canvasWrap.scrollTo({left:canvasWrap.scrollLeft+cr.left-wr.left-(wr.width-cr.width)/2,top:canvasWrap.scrollTop+cr.top-wr.top-(wr.height-cr.height)/2,behavior:'smooth'});
+};
+document.getElementById('twins-close').addEventListener('click',closeTwins);
+document.getElementById('twins-backdrop').addEventListener('click',closeTwins);
+document.getElementById('twinsBtn').addEventListener('click',openTwins);
 
+// ── Instructions popup ────────────────────────────────────────
+function openInstr(){document.getElementById('instr-popup').classList.remove('hidden');document.getElementById('instr-backdrop').classList.remove('hidden');}
+function closeInstr(){document.getElementById('instr-popup').classList.add('hidden');document.getElementById('instr-backdrop').classList.add('hidden');}
+document.getElementById('instr-close').addEventListener('click',closeInstr);
+document.getElementById('instr-backdrop').addEventListener('click',closeInstr);
+document.getElementById('instrBtn').addEventListener('click',openInstr);
+
+// ── Card drag & click ─────────────────────────────────────────
 function bindCardDrag(card){
   const onDown=e=>{
     if(e.button!==0&&!e.touches)return;e.preventDefault();
@@ -502,43 +591,44 @@ function resetLayout(){
     if(simRAF){cancelAnimationFrame(simRAF);simRAF=null;}
     cards.forEach(c=>{['position','left','top','width','zIndex','transition'].forEach(s=>c.style[s]='');const{parent,next}=origDOM.get(c)||{};if(!parent)return;if(next&&next.parentNode===parent)parent.insertBefore(c,next);else parent.appendChild(c);});
     origTitleDOM.forEach(({parent,next},t)=>{['position','left','top','width','zIndex','transition','whiteSpace','pointerEvents'].forEach(s=>t.style[s]='');if(next&&next.parentNode===parent)parent.insertBefore(t,next);else parent.appendChild(t);});
-    treeEl.style.minHeight='';origGridPos.clear();homePos.clear();origDOM.clear();titleCardMap.clear();origTitleDOM.clear();allFreed=false;clearArrows();
-    const sel=document.querySelector('.person.selected');if(sel)setTimeout(()=>drawArrows(sel.dataset.id),60);
+    treeEl.style.minHeight='';origGridPos.clear();homePos.clear();origDOM.clear();titleCardMap.clear();origTitleDOM.clear();allFreed=false;clearLines();
+    const sel=document.querySelector('.person.selected');if(sel)setTimeout(()=>drawConnections(sel.dataset.id),60);
   },600);
 }
 
+// ── Card rendering ────────────────────────────────────────────
 function initials(name){return name.split(' ').filter(w=>w.length>2&&!/^(de|del|la|el|y)$/i.test(w)).slice(0,2).map(w=>w[0].toUpperCase()).join('')||name[0];}
 const noteSVG=`<svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 2a1 1 0 011-1h5.586L13 4.414V14a1 1 0 01-1 1H4a1 1 0 01-1-1V2zm6 0v3.5h3.5L9 2zM5 7.5h6v1H5v-1zm0 2.5h6v1H5v-1zm0 2.5h3.5v1H5v-1z"/></svg>`;
 
 function renderCards(){
   cards.forEach(card=>{
-    const id=card.dataset.id,p=people[id];if(!p)return;
-    const gc=GEN_COLORS[p.gen]||'rgba(255,255,255,.25)';
+    const id=card.dataset.id,pd=people[id];if(!pd)return;
+    const gc=GEN_COLORS[pd.gen]||'rgba(255,255,255,.25)';
     card.innerHTML=`
       <div class="card-top">
-        <div class="avatar-init" style="background:${gc}22;border-color:${gc}55;color:${gc};">${initials(p.name)}</div>
-        <div class="card-info"><div class="name">${p.name}</div><div class="role">${p.role}</div></div>
-        ${p.notes?`<button class="note-btn" title="Character notes">${noteSVG}</button>`:''}
+        <div class="avatar-init" style="background:${gc}22;border-color:${gc}55;color:${gc};">${initials(pd.name)}</div>
+        <div class="card-info"><div class="name">${pd.name}</div><div class="role">${pd.role}</div></div>
+        ${pd.notes?`<button class="note-btn" title="Character notes">${noteSVG}</button>`:''}
       </div>
-      <div class="badges">${p.badges.map(b=>`<span class="badge">${b}</span>`).join('')}</div>`;
-    if(p.notes){
+      <div class="badges">${pd.badges.map(b=>`<span class="badge">${b}</span>`).join('')}</div>`;
+    if(pd.notes){
       const btn=card.querySelector('.note-btn');
       btn.addEventListener('mousedown',e=>e.stopPropagation());
       btn.addEventListener('touchstart',e=>e.stopPropagation(),{passive:true});
-      btn.addEventListener('click',e=>{e.stopPropagation();openPopup(id);});
+      btn.addEventListener('click',e=>{e.stopPropagation();openNotes(id);});
     }
     bindCardDrag(card);
   });
 }
 
+// ── Selection ─────────────────────────────────────────────────
 function selectPerson(id){
-  const p=people[id];if(!p)return;
-  // Build a map of related-id → border color by relationship type
+  const pd=people[id];if(!pd)return;
   const relColors=new Map();
   [['spouses',COLORS.spouses],['parents',COLORS.parents],['children',COLORS.children],['lovers',COLORS.lovers]].forEach(([k,col])=>{
-    (p[k]||[]).forEach(rid=>{if(!relColors.has(rid))relColors.set(rid,col);});
+    (pd[k]||[]).forEach(rid=>{if(!relColors.has(rid))relColors.set(rid,col);});
   });
-  (p.related||[]).forEach(rid=>{if(!relColors.has(rid))relColors.set(rid,'rgba(138,180,255,.8)');});
+  (pd.related||[]).forEach(rid=>{if(!relColors.has(rid))relColors.set(rid,'rgba(138,180,255,.8)');});
   cards.forEach(c=>{
     const cid=c.dataset.id,isSel=cid===id,isRel=relColors.has(cid)&&!isSel;
     c.classList.toggle('selected',isSel);c.classList.toggle('related',isRel);c.classList.toggle('dim',!isSel&&!isRel);
@@ -546,52 +636,62 @@ function selectPerson(id){
     else if(isRel){const col=relColors.get(cid);c.style.border=`2px solid ${col}`;c.style.boxShadow=`0 0 0 1px ${col}40,0 10px 28px rgba(0,0,0,.2)`;}
     else{c.style.border='';c.style.boxShadow='';}
   });
-  drawArrows(id);
+  drawConnections(id);
 }
 
 function resetView(){
-  if(!popupEl.classList.contains('hidden')){closePopup();return;}
+  const notesOpen=!document.getElementById('char-popup').classList.contains('hidden');
+  const twinsOpen=!document.getElementById('twins-popup').classList.contains('hidden');
+  const instrOpen=!document.getElementById('instr-popup').classList.contains('hidden');
+  if(notesOpen){closeNotes();return;}
+  if(twinsOpen){closeTwins();return;}
+  if(instrOpen){closeInstr();return;}
   activeFilter=null;activeTheme=null;
   document.querySelectorAll('.filter-btn').forEach(b=>{b.classList.remove('active');b.style.cssText='';});
   document.querySelectorAll('.theme-btn').forEach(b=>{b.classList.remove('active');b.style.cssText='';});
   document.getElementById('search').value='';
   cards.forEach(c=>{c.classList.remove('selected','related','dim');c.style.border='';c.style.boxShadow='';});
-  clearArrows();
+  clearLines();
 }
 
+// ── Filters ───────────────────────────────────────────────────
 function applyFilter(key){
   if(activeTheme){activeTheme=null;document.querySelectorAll('.theme-btn').forEach(b=>{b.classList.remove('active');b.style.cssText='';});}
   const off=activeFilter===key;activeFilter=off?null:key;
   document.querySelectorAll('.filter-btn').forEach(b=>{const on=b.dataset.filter===activeFilter;b.classList.toggle('active',on);b.style.cssText=on?'background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.32);':'';});
-  if(!activeFilter){cards.forEach(c=>c.classList.remove('dim'));const sel=document.querySelector('.person.selected');sel?drawArrows(sel.dataset.id):clearArrows();return;}
+  if(!activeFilter){cards.forEach(c=>c.classList.remove('dim'));const sel=document.querySelector('.person.selected');sel?drawConnections(sel.dataset.id):clearLines();return;}
   const types=FILTER_TYPES[activeFilter];
-  const rel=new Set();cards.forEach(c=>{const id=c.dataset.id,p=people[id];if(!p)return;if(types.some(t=>(p[t]||[]).length>0)){rel.add(id);types.forEach(t=>(p[t]||[]).forEach(rid=>rel.add(rid)));}});
+  const rel=new Set();cards.forEach(c=>{const id=c.dataset.id,pd=people[id];if(!pd)return;if(types.some(t=>(pd[t]||[]).length>0)){rel.add(id);types.forEach(t=>(pd[t]||[]).forEach(rid=>rel.add(rid)));}});
   cards.forEach(c=>c.classList.toggle('dim',!rel.has(c.dataset.id)));
-  const sel=document.querySelector('.person.selected');sel?drawArrows(sel.dataset.id):drawGlobalArrows(types);
+  const sel=document.querySelector('.person.selected');sel?drawConnections(sel.dataset.id):drawAllConnections(types);
 }
 
 function applyTheme(key){
   if(activeFilter){activeFilter=null;document.querySelectorAll('.filter-btn').forEach(b=>{b.classList.remove('active');b.style.cssText='';});}
   const off=activeTheme===key;activeTheme=off?null:key;
   document.querySelectorAll('.theme-btn').forEach(b=>{const t=THEMES[b.dataset.theme],on=b.dataset.theme===activeTheme;b.classList.toggle('active',on);b.style.cssText=on?`background:${t.col}18;border-color:${t.col}55;color:${t.col};`:'';});
-  if(!activeTheme){cards.forEach(c=>c.classList.remove('dim'));const sel=document.querySelector('.person.selected');sel?drawArrows(sel.dataset.id):clearArrows();return;}
+  if(!activeTheme){cards.forEach(c=>c.classList.remove('dim'));const sel=document.querySelector('.person.selected');sel?drawConnections(sel.dataset.id):clearLines();return;}
   const t=THEMES[activeTheme];
   cards.forEach(c=>c.classList.toggle('dim',!t.ids.has(c.dataset.id)));
-  const sel=document.querySelector('.person.selected');sel?drawArrows(sel.dataset.id):clearArrows();
+  const sel=document.querySelector('.person.selected');sel?drawConnections(sel.dataset.id):clearLines();
 }
 
 document.querySelectorAll('.filter-btn').forEach(b=>b.addEventListener('click',()=>applyFilter(b.dataset.filter)));
 document.querySelectorAll('.theme-btn').forEach(b=>b.addEventListener('click',()=>applyTheme(b.dataset.theme)));
 document.getElementById('resetLayoutBtn').addEventListener('click',resetLayout);
 
+// ── Search ────────────────────────────────────────────────────
 const deaccent=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;const row=Array.from({length:n+1},(_,i)=>i);for(let i=1;i<=m;i++){let p=i;for(let j=1;j<=n;j++){const v=a[i-1]===b[j-1]?row[j-1]:1+Math.min(row[j-1],row[j],p);row[j-1]=p;p=v;}row[n]=p;}return row[n];}
-function matchScore(q,p){if(!q)return 1;const name=deaccent(p.name),hay=deaccent(`${p.name} ${p.role} ${p.badges.join(' ')}`);if(hay.includes(q))return 1;if(q.length<=2)return name.split(/\s+/).some(t=>t.startsWith(q))?1:0;const qt=q.split(/\s+/).filter(Boolean),nt=name.split(/\s+/).filter(Boolean);let sum=0;for(const q2 of qt){let best=0;for(const n2 of nt){if(n2.startsWith(q2)){best=1;break;}const s=1-lev(q2,n2)/Math.max(q2.length,n2.length);if(s>best)best=s;}sum+=best;}return sum/qt.length;}
-document.getElementById('search').addEventListener('input',e=>{const q=deaccent(e.target.value.trim());if(!q){cards.forEach(c=>c.classList.remove('dim'));return;}cards.forEach(c=>{const p=people[c.dataset.id];if(!p)return;c.classList.toggle('dim',matchScore(q,p)<0.65);});});
+function matchScore(q,pd){if(!q)return 1;const name=deaccent(pd.name),hay=deaccent(`${pd.name} ${pd.role} ${pd.badges.join(' ')}`);if(hay.includes(q))return 1;if(q.length<=2)return name.split(/\s+/).some(t=>t.startsWith(q))?1:0;const qt=q.split(/\s+/).filter(Boolean),nt=name.split(/\s+/).filter(Boolean);let sum=0;for(const q2 of qt){let best=0;for(const n2 of nt){if(n2.startsWith(q2)){best=1;break;}const s=1-lev(q2,n2)/Math.max(q2.length,n2.length);if(s>best)best=s;}sum+=best;}return sum/qt.length;}
+document.getElementById('search').addEventListener('input',e=>{const q=deaccent(e.target.value.trim());if(!q){cards.forEach(c=>c.classList.remove('dim'));return;}cards.forEach(c=>{const pd=people[c.dataset.id];if(!pd)return;c.classList.toggle('dim',matchScore(q,pd)<0.65);});});
+
 document.addEventListener('keydown',e=>{if(e.key==='Escape')resetView();});
-window.addEventListener('resize',()=>{const s=document.querySelector('.person.selected');if(s)drawArrows(s.dataset.id);});
-window.openPopup=openPopup;
-initSVG();renderCards();
+window.addEventListener('resize',()=>{const s=document.querySelector('.person.selected');if(s)drawConnections(s.dataset.id);});
+
+// ── Init ──────────────────────────────────────────────────────
+initSVG();
+renderCards();
 </script>
 </body>
 </html>
